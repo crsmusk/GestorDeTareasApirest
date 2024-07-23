@@ -1,4 +1,4 @@
-package com.api.gestiondetareas.Excepciones;
+package com.api.gestiondetareas.Exception;
 
 public class tareaNoEncontradaException extends RuntimeException {
 

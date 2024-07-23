@@ -1,4 +1,4 @@
-package com.api.gestiondetareas.Excepciones.ClassException;
+package com.api.gestiondetareas.Exception.ClassException;
 
 public class Error {
  private int estado;

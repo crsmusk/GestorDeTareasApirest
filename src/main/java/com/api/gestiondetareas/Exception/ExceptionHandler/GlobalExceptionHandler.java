@@ -1,32 +1,46 @@
-package com.api.gestiondetareas.Excepciones.ExceptionHandler;
+package com.api.gestiondetareas.Exception.ExceptionHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.api.gestiondetareas.Excepciones.categoriaNoEncontradaException;
-import com.api.gestiondetareas.Excepciones.tareaNoEncontradaException;
-import com.api.gestiondetareas.Excepciones.ClassException.Error;
+import com.api.gestiondetareas.Exception.categoriaNoEncontradaException;
+import com.api.gestiondetareas.Exception.tareaNoEncontradaException;
+import com.api.gestiondetareas.Exception.usuarioNoEncontradoException;
+import com.api.gestiondetareas.Exception.ClassException.Error;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(categoriaNoEncontradaException.class)
   public ResponseEntity<Error>manejarCategoriaException(categoriaNoEncontradaException ex){
     Error error=new Error(
-        HttpStatus.BAD_REQUEST.value(),
+        HttpStatus.NOT_FOUND.value(),
         ex.getMessage(),
         System.currentTimeMillis()
     );
     return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
   }
+
     @ExceptionHandler(tareaNoEncontradaException.class)
   public ResponseEntity<Error>manejarTareaException(tareaNoEncontradaException ex){
     Error error=new Error(
-      HttpStatus.BAD_REQUEST.value(),
+      HttpStatus.NOT_FOUND.value(),
       ex.getMessage(),
       System.currentTimeMillis()
     );
     return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
   }
+  
+  @ExceptionHandler(usuarioNoEncontradoException.class)
+  public ResponseEntity<Error>manejarUsuarioException(usuarioNoEncontradoException ex){
+    Error error=new Error(
+      HttpStatus.NOT_FOUND.value(),
+      ex.getMessage(),
+      System.currentTimeMillis()
+    );
+    return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+  }
+
 
 }

@@ -1,9 +1,9 @@
-package com.api.gestiondetareas.Entidades.DTO;
+package com.api.gestiondetareas.Model.DTOs;
 
 import java.time.LocalDate;
 
 
-//import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 //import jakarta.validation.constraints.NotNull;
 //import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,9 +14,7 @@ import lombok.Data;
 @Data
 @Builder
 public class tareaDTO {
-    //@NotBlank(message = "este espacio no puede estar en blanco")
- private String categoria;
-   //@NotBlank(message = "este campo no puede estar en blanco")
+   @NotBlank(message = "este campo no puede estar en blanco")
  private String nombre;
     //@NotBlank(message = "este espacio no puede estar en blanco")
  private String contenido;
