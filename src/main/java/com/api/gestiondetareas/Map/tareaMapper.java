@@ -1,30 +1,37 @@
 package com.api.gestiondetareas.Map;
 
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import java.util.List;
+
+
+import org.springframework.stereotype.Component;
 
 import com.api.gestiondetareas.Model.DTOs.tareaDTO;
 import com.api.gestiondetareas.Model.Entities.tarea;
 
-@Mapper(componentModel = "spring")
-public interface tareaMapper {
+@Component
+public class tareaMapper {
 
-    @Mappings({
-        @Mapping(source = "nombre",target = "nombre"),
-        @Mapping(source = "contenido",target = "contenido"),
-        @Mapping(source = "estado",target = "estado"),
-        @Mapping(source = "fechaLimite",target = "fechaLimite"),
-       
-    })
-    tareaDTO toTareadDto(tarea tarea);
-    
-    @InheritInverseConfiguration
-    @Mappings({
-       @Mapping(target = "usuario",ignore = true),
-       @Mapping(target = "categoria",ignore = true)
-    })
-    tarea toTarea(tareaDTO tareadDto);
+    public tareaDTO toTareaDto(tarea tarea){
+        return tareaDTO.builder()
+        .nombre(tarea.getNombre())
+        .estado(tarea.isEstado())
+        .contenido(tarea.getContenido())
+        .fechaLimite(tarea.getFechaLimite())
+        .build();
+    }
+
+    public List<tareaDTO>toTareasDto(List<tarea>tareas){
+        return tareas.stream().map(this::toTareaDto).toList();
+    }
+
+    public tarea toTarea(tareaDTO tareaDTO){
+        tarea tarea=new tarea();
+        tarea.setNombre(tareaDTO.getNombre());
+        tarea.setEstado(tareaDTO.isEstado());
+        tarea.setContenido(tareaDTO.getContenido());
+        tarea.setFechaLimite(tareaDTO.getFechaLimite());
+        return tarea;
+
+    }
     
 }

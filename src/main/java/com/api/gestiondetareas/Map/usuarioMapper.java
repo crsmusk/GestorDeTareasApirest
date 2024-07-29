@@ -2,26 +2,32 @@ package com.api.gestiondetareas.Map;
 
 import java.util.List;
 
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+
+import org.springframework.stereotype.Component;
 
 import com.api.gestiondetareas.Model.DTOs.usuarioDTO;
 import com.api.gestiondetareas.Model.Entities.usuario;
 
-@Mapper(componentModel = "spring")
-public interface usuarioMapper {
-    @Mappings({
-        @Mapping(source = "email",target = "email"),
-        @Mapping(source = "password",target = "password"),
-        @Mapping(source = "nickname",target = "nickname"),
-    })
-    usuarioDTO toUsuarioDTO(usuario usuario);
-    List<usuarioDTO>toUsuarioDTOs(List<usuario>usuarios);
+@Component
+public class usuarioMapper {
+   public usuarioDTO toUsuarioDto(usuario usuario){
+    return usuarioDTO.builder()
+    .email(usuario.getEmail())
+    .password(usuario.getPassword())
+    .nickname(usuario.getNickname())
+    .build();
+   }
 
-    @InheritInverseConfiguration
-    @Mapping(target = "tareas",ignore = true)
-    usuario toUsuario(usuarioDTO usuarioDTO);
+   public List<usuarioDTO>toUsuariosDto(List<usuario>usuarios){
+    return usuarios.stream().map(this::toUsuarioDto).toList();
+   }
+
+   public usuario toUsuario(usuarioDTO usuarioDTO){
+    usuario usuario=new usuario();
+    usuario.setEmail(usuarioDTO.getEmail());
+    usuario.setPassword(usuario.getPassword());
+    usuario.setNickname(usuarioDTO.getNickname());
+    return usuario;
+   }
 
 }

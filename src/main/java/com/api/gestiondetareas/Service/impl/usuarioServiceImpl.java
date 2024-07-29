@@ -23,11 +23,7 @@ public class usuarioServiceImpl implements IusuarioDAO {
 
     @Override
     public List<usuarioDTO> findAll() {
-       List<usuarioDTO>list=usuarioRepo.findAll().stream().map(usuario->usuarioDTO.builder()
-       .email(usuario.getEmail())
-       .password(usuario.getPassword())
-       .nickname(usuario.getNickname())
-       .build()).toList();
+       List<usuarioDTO>list=mapper.toUsuariosDto(usuarioRepo.findAll());
        return list;
     }
 
@@ -35,11 +31,7 @@ public class usuarioServiceImpl implements IusuarioDAO {
     @Override
     public Optional<usuarioDTO> findByNickName(String nickname) {
         usuario user=usuarioRepo.findByNicknameIgnoreCase(nickname).orElseThrow(()-> new usuarioNoEncontradoException("no se encontro al usuario")); 
-        usuarioDTO usuario=usuarioDTO.builder()
-        .email(user.getEmail())
-        .password(user.getPassword())
-        .nickname(user.getNickname())
-        .build();
+        usuarioDTO usuario=mapper.toUsuarioDto(user);
         return Optional.of(usuario);
     }
        
@@ -48,20 +40,14 @@ public class usuarioServiceImpl implements IusuarioDAO {
     @Override
     public Optional<usuarioDTO> findByEmail(String email) {
        usuario user=usuarioRepo.findByEmailIgnoreCase(email).orElseThrow(()-> new usuarioNoEncontradoException("no se encontro al usuario"));
-       usuarioDTO usuario=usuarioDTO.builder()
-       .email(user.getEmail())
-       .password(user.getPassword())
-       .nickname(user.getNickname())
-       .build();
+       usuarioDTO usuario=mapper.toUsuarioDto(user);
        return Optional.of(usuario);
     }
 
 
     @Override
     public void save(usuarioDTO usuarioDTO) {
-        usuario usuario=new usuario();
-        usuario=mapper.toUsuario(usuarioDTO);
-        usuarioRepo.save(usuario);
+        usuarioRepo.save(mapper.toUsuario(usuarioDTO));
     }
 
 
@@ -74,11 +60,7 @@ public class usuarioServiceImpl implements IusuarioDAO {
     @Override
     public Optional<usuarioDTO> findById(long id) {
         usuario user=usuarioRepo.findById(id).orElseThrow(()-> new usuarioNoEncontradoException("no se encontro al usuario"));
-        usuarioDTO usuario=usuarioDTO.builder()
-        .email(user.getEmail())
-        .password(user.getPassword())
-        .nickname(user.getNickname())
-        .build();
+        usuarioDTO usuario=mapper.toUsuarioDto(user);
         return Optional.of(usuario);
     }
 
@@ -89,11 +71,7 @@ public class usuarioServiceImpl implements IusuarioDAO {
        user.setPassword(usuarioDT.getPassword());
        user.setNickname(usuarioDT.getNickname());
 
-       usuarioDTO usuario=usuarioDTO.builder()
-       .email(user.getEmail())
-       .password(user.getPassword())
-       .nickname(user.getNickname())
-       .build();
+       usuarioDTO usuario=mapper.toUsuarioDto(user);
         return usuario;
     }
 

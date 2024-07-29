@@ -23,12 +23,7 @@ public class tareaServiceImpl implements ItareaDAO{
 
     @Override
     public List<tareaDTO> findAll() {
-        List<tareaDTO>tasks=tareaRepo.findAll().stream().map(tarea->tareaDTO.builder()
-        .nombre(tarea.getNombre())
-        .estado(tarea.isEstado())
-        .fechaLimite(tarea.getFechaLimite())
-        .contenido(tarea.getContenido())
-        .build()).toList();
+        List<tareaDTO>tasks=mapper.toTareasDto(tareaRepo.findAll());
         return tasks;
     }
 
@@ -36,22 +31,14 @@ public class tareaServiceImpl implements ItareaDAO{
     @Override
     public Optional<List<tareaDTO>> findByNombre(String nombre) {
        List<tarea>lista=tareaRepo.findByNombre(nombre).orElseThrow(()->new tareaNoEncontradaException("no se encontro una tarea con ese nombre"));
-       List<tareaDTO>tareas=lista.stream().map(tarea->tareaDTO.builder()
-       .nombre(tarea.getNombre())
-       .estado(tarea.isEstado())
-       .fechaLimite(tarea.getFechaLimite())
-       .contenido(tarea.getContenido())
-       .build()).toList();
+       List<tareaDTO>tareas=mapper.toTareasDto(lista);
        return Optional.of(tareas);
     }
 
 
     @Override
     public void save(tareaDTO tareaDTO) {
-        tarea tarea=new tarea();
-        tarea=mapper.toTarea(tareaDTO);
-        tareaRepo.save(tarea);
-        
+        tareaRepo.save(mapper.toTarea(tareaDTO));
     }
 
 
@@ -64,36 +51,21 @@ public class tareaServiceImpl implements ItareaDAO{
     @Override
     public Optional<tareaDTO> findById(Long id) {
         tarea task=tareaRepo.findById(id).orElseThrow(()-> new tareaNoEncontradaException("no se encontro la tarea"));
-        tareaDTO tarea=tareaDTO.builder()
-        .nombre(task.getNombre())
-        .contenido(task.getContenido())
-        .estado(task.isEstado())
-        .fechaLimite(task.getFechaLimite())
-        .build();
+        tareaDTO tarea=mapper.toTareaDto(task);
         return Optional.of(tarea);
     }
 
 
     @Override
     public List<tareaDTO> findByEstadoIsTrue() {
-      List<tareaDTO>tareas=tareaRepo.findAllByEstadoTrueOrderByFechaLimite().stream().map(tarea-> tareaDTO.builder()
-      .nombre(tarea.getNombre())
-      .estado(tarea.isEstado())
-      .fechaLimite(tarea.getFechaLimite())
-      .contenido(tarea.getContenido())
-      .build()).toList();
+      List<tareaDTO>tareas=mapper.toTareasDto(tareaRepo.findAllByEstadoTrueOrderByFechaLimite());
       return tareas;
     }
 
 
     @Override
     public List<tareaDTO> findByEstadoIsFalse() {
-        List<tareaDTO>tasks=tareaRepo.findAllByEstadoFalseOrderByFechaLimite().stream().map(tarea-> tareaDTO.builder()
-        .nombre(tarea.getNombre())
-        .estado(tarea.isEstado())
-        .fechaLimite(tarea.getFechaLimite())
-        .contenido(tarea.getContenido())
-        .build()).toList();
+        List<tareaDTO>tasks=mapper.toTareasDto(tareaRepo.findAllByEstadoFalseOrderByFechaLimite());
         return tasks;
     }
 
@@ -107,12 +79,7 @@ public class tareaServiceImpl implements ItareaDAO{
         Tarea.setFechaLimite(tarea.getFechaLimite());
         tareaRepo.save(Tarea);
         
-        tareaDTO task=tareaDTO.builder()
-        .nombre(Tarea.getNombre())
-        .contenido(Tarea.getContenido())
-        .estado(Tarea.isEstado())
-        .fechaLimite(Tarea.getFechaLimite())
-        .build();
+        tareaDTO task=mapper.toTareaDto(Tarea);
         return task;
     }
 

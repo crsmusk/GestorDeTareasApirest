@@ -26,10 +26,7 @@ public class categoriaServiceImpl implements IcategoriaDAO{
 
     @Override
     public List<categoriaDTO> findAll() {
-        
-        List<categoriaDTO>lista=categoriaRepo.findAll().stream().map(categoria->categoriaDTO.builder()
-        .nombreCategoria(categoria.getNombreCategoria())
-        .build()).toList();
+        List<categoriaDTO>lista=mapper.toCategoriasDto(categoriaRepo.findAll());
         return lista;
     }
 
@@ -37,18 +34,14 @@ public class categoriaServiceImpl implements IcategoriaDAO{
     @Override
     public Optional<categoriaDTO> findByNombre(String nombre) {
         categoria category=categoriaRepo.findByNombreCategoria(nombre).orElseThrow(()-> new categoriaNoEncontradaException("no se encontro la categoria con el nombre"+nombre));
-        categoriaDTO categoria=categoriaDTO.builder()
-        .nombreCategoria(category.getNombreCategoria())
-        .build();
+        categoriaDTO categoria=mapper.toCategoriaDto(category);
         return Optional.of(categoria);
     }
 
 
     @Override
-    public void save(categoriaDTO categoria) {
-        categoria categorias = new categoria();
-        categorias=mapper.toCategoria(categoria);
-        categoriaRepo.save(categorias);
+    public void save(categoriaDTO categoria) { 
+        categoriaRepo.save(mapper.toCategoria(categoria));
     }
 
 
@@ -61,9 +54,7 @@ public class categoriaServiceImpl implements IcategoriaDAO{
     @Override
     public Optional<categoriaDTO> findById(long id) {
        categoria category=categoriaRepo.findById(id).orElseThrow(()-> new categoriaNoEncontradaException("no se encontro la categoria con el id"+id));
-       categoriaDTO categoria=categoriaDTO.builder()
-       .nombreCategoria(category.getNombreCategoria())
-       .build();
+       categoriaDTO categoria=mapper.toCategoriaDto(category);
        return Optional.of(categoria);
     }
 
@@ -73,9 +64,7 @@ public class categoriaServiceImpl implements IcategoriaDAO{
         categoria.setNombreCategoria(categoriaDT.getNombreCategoria());
         categoriaRepo.save(categoria);
         
-        categoriaDTO category=categoriaDTO.builder()
-        .nombreCategoria(categoria.getNombreCategoria())
-        .build();
+        categoriaDTO category=mapper.toCategoriaDto(categoria);
         return category;
     }
 
