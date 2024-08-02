@@ -70,7 +70,7 @@ public class usuarioServiceImpl implements IusuarioDAO {
        user.setEmail(usuarioDT.getEmail());
        user.setPassword(usuarioDT.getPassword());
        user.setNickname(usuarioDT.getNickname());
-
+       usuarioRepo.save(user);
        usuarioDTO usuario=mapper.toUsuarioDto(user);
         return usuario;
     }

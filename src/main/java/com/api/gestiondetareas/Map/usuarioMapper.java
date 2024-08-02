@@ -25,7 +25,7 @@ public class usuarioMapper {
    public usuario toUsuario(usuarioDTO usuarioDTO){
     usuario usuario=new usuario();
     usuario.setEmail(usuarioDTO.getEmail());
-    usuario.setPassword(usuario.getPassword());
+    usuario.setPassword(usuarioDTO.getPassword());
     usuario.setNickname(usuarioDTO.getNickname());
     return usuario;
    }
