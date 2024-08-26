@@ -11,9 +11,9 @@ import com.api.gestiondetareas.Map.tareaMapper;
 import com.api.gestiondetareas.Model.DTOs.tareaDTO;
 import com.api.gestiondetareas.Model.Entities.tarea;
 import com.api.gestiondetareas.Repository.tareaRepository;
-import com.api.gestiondetareas.Service.ItareaDAO;
+import com.api.gestiondetareas.Service.Interface.Itarea;
 @Service
-public class tareaServiceImpl implements ItareaDAO{
+public class tareaServiceImpl implements Itarea{
 
     @Autowired
     private tareaRepository tareaRepo;

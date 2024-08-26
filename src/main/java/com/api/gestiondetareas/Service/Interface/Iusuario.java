@@ -1,4 +1,4 @@
-package com.api.gestiondetareas.Service;
+package com.api.gestiondetareas.Service.Interface;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.api.gestiondetareas.Model.DTOs.usuarioDTO;
 
 
-public interface IusuarioDAO {
+public interface Iusuario {
 
  public List<usuarioDTO>findAll();
 

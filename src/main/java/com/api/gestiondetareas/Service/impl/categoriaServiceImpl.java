@@ -11,10 +11,10 @@ import com.api.gestiondetareas.Map.categoriaMapper;
 import com.api.gestiondetareas.Model.DTOs.categoriaDTO;
 import com.api.gestiondetareas.Model.Entities.categoria;
 import com.api.gestiondetareas.Repository.categoriaRepository;
-import com.api.gestiondetareas.Service.IcategoriaDAO;
+import com.api.gestiondetareas.Service.Interface.Icategoria;
 
 @Service
-public class categoriaServiceImpl implements IcategoriaDAO{
+public class categoriaServiceImpl implements Icategoria{
 
     @Autowired
     categoriaRepository categoriaRepo;

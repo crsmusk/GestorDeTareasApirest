@@ -1,11 +1,11 @@
-package com.api.gestiondetareas.Service;
+package com.api.gestiondetareas.Service.Interface;
 import java.util.List;
 import java.util.Optional;
 
 import com.api.gestiondetareas.Model.DTOs.tareaDTO;
 
 
-public interface ItareaDAO  {
+public interface Itarea  {
 
   public List<tareaDTO>findAll();
 

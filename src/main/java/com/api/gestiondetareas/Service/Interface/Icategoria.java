@@ -1,4 +1,4 @@
-package com.api.gestiondetareas.Service;
+package com.api.gestiondetareas.Service.Interface;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +9,7 @@ import com.api.gestiondetareas.Model.DTOs.categoriaDTO;
 
 
 
-public interface IcategoriaDAO {
+public interface Icategoria {
 
   public List<categoriaDTO>findAll();
 

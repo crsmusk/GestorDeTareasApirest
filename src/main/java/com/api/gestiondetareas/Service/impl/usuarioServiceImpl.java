@@ -12,9 +12,9 @@ import com.api.gestiondetareas.Model.DTOs.usuarioDTO;
 
 import com.api.gestiondetareas.Model.Entities.usuario;
 import com.api.gestiondetareas.Repository.usuarioRepository;
-import com.api.gestiondetareas.Service.IusuarioDAO;
+import com.api.gestiondetareas.Service.Interface.Iusuario;
 @Service
-public class usuarioServiceImpl implements IusuarioDAO {
+public class usuarioServiceImpl implements Iusuario {
 
     @Autowired
     private usuarioRepository usuarioRepo;
