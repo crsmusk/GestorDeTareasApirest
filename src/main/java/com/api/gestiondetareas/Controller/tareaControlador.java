@@ -1,5 +1,4 @@
 package com.api.gestiondetareas.Controller;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-import com.api.gestiondetareas.Exception.tareaNoEncontradaException;
 import com.api.gestiondetareas.Model.DTOs.tareaDTO;
 import com.api.gestiondetareas.Service.impl.tareaServiceImpl;
 
@@ -35,7 +33,7 @@ public class tareaControlador {
   @ApiResponse(responseCode = "200",description = "se recupero la lista de tareas")
   
   @GetMapping
-  public ResponseEntity<List<tareaDTO>> traerTodo(){
+  public ResponseEntity<List<tareaDTO>> getll(){
     return new ResponseEntity<>(tareaService.findAll(),HttpStatus.OK);
   }
 
@@ -46,13 +44,8 @@ public class tareaControlador {
   })
 
   @GetMapping ("/{id}")
-  public ResponseEntity<Optional<tareaDTO>>getTarea(@Parameter(description = " se espera el id de la tarea a buscar") @PathVariable long id){
-    Optional<tareaDTO>task=tareaService.findById(id);
-    if (task.isPresent()) {
-      return new ResponseEntity<>(task,HttpStatus.OK);
-    }else{
-      throw new tareaNoEncontradaException("no se encontro la tarea con el id "+id);
-    }
+  public ResponseEntity<tareaDTO>getTareaById(@Parameter(description = " se espera el id de la tarea a buscar") @PathVariable long id){
+      return new ResponseEntity<>(tareaService.findById(id),HttpStatus.OK);
   }
 
   @Operation(summary = "busca una tarea por su nombre ")
@@ -62,13 +55,8 @@ public class tareaControlador {
   })
 
   @GetMapping("/buscarPorNombre/{nombre}")
-  public ResponseEntity<Optional<List<tareaDTO>>> findByNombre(@Parameter(description = "se espera el nombre de la tarea a buscar")@PathVariable String nombre){
-    if(tareaService.findByNombre(nombre).isPresent()){
-        return new ResponseEntity<>(tareaService.findByNombre(nombre),HttpStatus.OK);
-    }else{
-      throw new tareaNoEncontradaException("no se encontro tareas con el nombre"+nombre);
-    }
-    
+  public ResponseEntity<List<tareaDTO>> findByNombre(@Parameter(description = "se espera el nombre de la tarea a buscar")@PathVariable String nombre){
+      return new ResponseEntity<>(tareaService.findByNombre(nombre),HttpStatus.OK);
   }
 
     

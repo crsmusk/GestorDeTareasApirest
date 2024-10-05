@@ -1,8 +1,6 @@
 package com.api.gestiondetareas.Controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.api.gestiondetareas.Exception.categoriaNoEncontradaException;
-import com.api.gestiondetareas.Exception.usuarioNoEncontradoException;
-
 
 import com.api.gestiondetareas.Model.DTOs.usuarioDTO;
 
@@ -52,13 +46,8 @@ public class usuarioController {
     @ApiResponse(responseCode = "200",description = "se optuvo el usuario correctamente")
 
     @GetMapping("/{id}")
-    public Optional<usuarioDTO>getById(@Parameter(description = "se espera el id del usuario a buscar")@PathVariable Long id){
-        Optional<usuarioDTO>user=usuarioService.findById(id);
-        if (user.isPresent()) {
-            return user;   
-        }else{
-            throw new categoriaNoEncontradaException("no se encontro el usuario");
-        }
+    public ResponseEntity<usuarioDTO>getById(@Parameter(description = "se espera el id del usuario a buscar")@PathVariable Long id){
+        return new ResponseEntity<>(usuarioService.findById(id),HttpStatus.OK);
     }
 
     @Operation(summary = "busca un usuario por su nickname")
@@ -68,12 +57,8 @@ public class usuarioController {
     })
 
     @GetMapping("/buscarUsuarioPorNickName/{nickname}")
-    public ResponseEntity<Optional<usuarioDTO>>getByNickName(@Parameter(description = "se espera el nickname del usuario a buscar")@PathVariable String nickName){
-        if(usuarioService.findByNickName(nickName).isPresent()){
-            return new ResponseEntity<>(usuarioService.findByNickName(nickName),HttpStatus.OK);
-        }else{
-            throw new usuarioNoEncontradoException("no se encontro al usuario con el nickName "+nickName);
-        }
+    public ResponseEntity<usuarioDTO>getByNickName(@Parameter(description = "se espera el nickname del usuario a buscar")@PathVariable String nickName){
+        return new ResponseEntity<>(usuarioService.findByNickName(nickName),HttpStatus.OK);
     }
 
     @Operation(summary = "busca un usuario por su email")
@@ -82,12 +67,8 @@ public class usuarioController {
         @ApiResponse(responseCode = "404")
     })
     @GetMapping("/buscarUsuarioPorEmail/{email}")
-    public ResponseEntity<Optional<usuarioDTO>>getByEmail(@Parameter(description = "se espera el email del usuario a buscar")@PathVariable String email){
-        if(usuarioService.findByEmail(email).isPresent()){
-            return new ResponseEntity<>(usuarioService.findByEmail(email),HttpStatus.OK);
-        }else {
-            throw new usuarioNoEncontradoException("no se encontro al usuario con el email "+email);
-        }
+    public ResponseEntity<usuarioDTO>getByEmail(@Parameter(description = "se espera el email del usuario a buscar")@PathVariable String email){
+         return new ResponseEntity<>(usuarioService.findByEmail(email),HttpStatus.OK);
     }
     @Operation(summary = "borra un usuario por su id")
     @ApiResponse(responseCode = "200")

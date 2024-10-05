@@ -1,8 +1,6 @@
 package com.api.gestiondetareas.Controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.gestiondetareas.Exception.categoriaNoEncontradaException;
 import com.api.gestiondetareas.Model.DTOs.categoriaDTO;
 import com.api.gestiondetareas.Service.impl.categoriaServiceImpl;
 
@@ -51,13 +48,9 @@ public class categoriaController {
     })
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<categoriaDTO>>getById(@Parameter(description = "se espera el id de la categoria a buscar")@PathVariable Long id){
-        Optional<categoriaDTO> category=categoriaService.findById(id);
-        if (category.isPresent()) {
-            return new ResponseEntity<>(category,HttpStatus.OK);      
-        }else{
-            throw new categoriaNoEncontradaException("no se encontro la categoria con el id"+id);
-        }
+    public ResponseEntity<categoriaDTO>getById(@Parameter(description = "se espera el id de la categoria a buscar")@PathVariable Long id){
+       
+        return new ResponseEntity<>(categoriaService.findById(id),HttpStatus.OK);      
     }
 
     @Operation(summary = "busca una categoria por su respectivo nombre ")
@@ -67,13 +60,10 @@ public class categoriaController {
     })
 
     @GetMapping("/buscarCategoriaPorNombre/{nombreCategoria}")
-    public ResponseEntity<Optional<categoriaDTO>>getByNombre(@Parameter(description = "se espera el nombre de la tarea a buscar")@PathVariable String nombreCategoria){
-       Optional<categoriaDTO>category=categoriaService.findByNombre(nombreCategoria);
-       if(category.isPresent()){
-        return new ResponseEntity<>(category,HttpStatus.OK);
-       }else{
-        throw new categoriaNoEncontradaException("no se encontro la categoria con el nomnre"+nombreCategoria);
-       }
+    public ResponseEntity<categoriaDTO>getByNombre(@Parameter(description = "se espera el nombre de la tarea a buscar")@PathVariable String nombreCategoria){
+       
+        return new ResponseEntity<>(categoriaService.findByNombre(nombreCategoria),HttpStatus.OK);
+       
     }
 
     @Operation(summary = "borra una categoria")
@@ -101,8 +91,5 @@ public class categoriaController {
     public ResponseEntity<categoriaDTO>updateCategoria(@PathVariable Long id,@RequestBody categoriaDTO categoriaDTO){
         return new ResponseEntity<>(categoriaService.update(id, categoriaDTO),HttpStatus.OK);
     }
-
-
-
 
 }
