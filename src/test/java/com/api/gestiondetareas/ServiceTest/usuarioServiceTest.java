@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -34,35 +35,37 @@ public class usuarioServiceTest {
   @BeforeEach
   public void setUp(){
     usuarioDTOEsperado=new usuarioDTO();
-    usuarioDTOEsperado.setEmail("pepe@Gmail.com");
+    usuarioDTOEsperado.setUserName("pepe@Gmail.com");
     usuarioDTOEsperado.setPassword("patronum");
     usuarioDTOEsperado.setNickname("supremo");
+    List<String>lista=List.of("ADMIN");
+    usuarioDTOEsperado.setRoles(lista);
 
     usuarioService.save(usuarioDTOEsperado);
   }
   @Test
   public void usuario_find_by_id(){
     usuario=usuarioRepo.findByNicknameIgnoreCase("supremo");
-    Optional<usuarioDTO> usuarioDTOPtenido=usuarioService.findById(usuario.get().getId());
+    usuarioDTO usuarioDTOPtenido=usuarioService.findById(usuario.get().getId());
 
-    assertTrue(usuarioDTOPtenido.isPresent());
-    assertEquals(usuarioDTOEsperado, usuarioDTOPtenido.get());
+  
+    assertEquals(usuarioDTOEsperado, usuarioDTOPtenido);
   }
 
   @Test
   public void usuario_find_by_nickname(){
-    Optional<usuarioDTO> usuarioDTOPtenido=usuarioService.findByNickName("supremo");
+    usuarioDTO usuarioDTOPtenido=usuarioService.findByNickName("supremo");
 
-    assertTrue(usuarioDTOPtenido.isPresent());
-    assertEquals(usuarioDTOEsperado, usuarioDTOPtenido.get());
+    
+    assertEquals(usuarioDTOEsperado, usuarioDTOPtenido);
   }
 
   @Test
   public void usuario_find_by_email(){
-    Optional<usuarioDTO> usuarioDTOPtenido=usuarioService.findByEmail("pepe@Gmail.com");
+    usuarioDTO usuarioDTOPtenido=usuarioService.findByEmail("pepe@Gmail.com");
 
-    assertTrue(usuarioDTOPtenido.isPresent());
-    assertEquals(usuarioDTOEsperado, usuarioDTOPtenido.get());
+    
+    assertEquals(usuarioDTOEsperado, usuarioDTOPtenido);
   }
 
   @Test
@@ -71,10 +74,10 @@ public class usuarioServiceTest {
     usuarioDTOEsperado.setNickname("Overlord");
     usuarioService.update(usuario.get().getId(), usuarioDTOEsperado);
 
-    Optional<usuarioDTO>usuarioDtoObtenido=usuarioService.findByNickName("overlord");
+    usuarioDTO usuarioDtoObtenido=usuarioService.findByNickName("overlord");
 
-    assertTrue(usuarioDtoObtenido.isPresent());
-    assertEquals(usuarioDTOEsperado, usuarioDtoObtenido.get() );
+    
+    assertEquals(usuarioDTOEsperado, usuarioDtoObtenido );
   }
 
   @Test 
