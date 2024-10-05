@@ -1,6 +1,7 @@
 package com.api.gestiondetareas.Model.DTOs;
 
-import jakarta.validation.constraints.NotBlank;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class usuarioDTO {
-    @NotBlank(message = "este espacio no puede ir en blanco")
-    private String email;
+    private String userName;
     private String password;
     private String nickname;
+    List<String>roles;
 }

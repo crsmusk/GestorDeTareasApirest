@@ -12,9 +12,10 @@ import com.api.gestiondetareas.Model.Entities.usuario;
 public class usuarioMapper {
    public usuarioDTO toUsuarioDto(usuario usuario){
     return usuarioDTO.builder()
-    .email(usuario.getEmail())
+    .userName(usuario.getUserName())
     .password(usuario.getPassword())
     .nickname(usuario.getNickname())
+    .roles(usuario.getRoles().stream().map(rol->rol.getNombre()).toList())
     .build();
    }
 
@@ -24,7 +25,7 @@ public class usuarioMapper {
 
    public usuario toUsuario(usuarioDTO usuarioDTO){
     usuario usuario=new usuario();
-    usuario.setEmail(usuarioDTO.getEmail());
+    usuario.setUserName(usuarioDTO.getUserName());
     usuario.setPassword(usuarioDTO.getPassword());
     usuario.setNickname(usuarioDTO.getNickname());
     return usuario;
