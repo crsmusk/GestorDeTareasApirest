@@ -44,20 +44,20 @@ public class tareaServiceTest {
     @Test
     public void tarea_find_by_nombre(){
         lista=tareaRepo.findByNombreIgnoreCase("trabajo");
-        Optional<List<tareaDTO>> tareaOptenida=tareaService.findByNombre("trabajo");
-        tareaDTO tarea=tareaOptenida.get().getFirst();
+        List<tareaDTO> tareaOptenida=tareaService.findByNombre("trabajo");
+        tareaDTO tarea=tareaOptenida.getFirst();
         
-        assertTrue(tareaOptenida.isPresent());
+        
         assertEquals(tareaDTOEsperada, tarea);
     }
 
     @Test
     public void tarea_find_by_id(){
         lista=tareaRepo.findByNombreIgnoreCase("trabajo");
-        Optional<tareaDTO> tareaOptenida=tareaService.findById(lista.get().getFirst().getId());
+        tareaDTO tareaOptenida=tareaService.findById(lista.get().getFirst().getId());
         
-        assertTrue(tareaOptenida.isPresent());
-        assertEquals(tareaDTOEsperada, tareaOptenida.get());
+        
+        assertEquals(tareaDTOEsperada, tareaOptenida);
     }
 
     @Test
@@ -66,10 +66,10 @@ public class tareaServiceTest {
         tareaDTOEsperada.setNombre("urgente");
         tareaService.update(lista.get().getFirst().getId(), tareaDTOEsperada);
 
-        Optional<List<tareaDTO>>tareaDTOsOptenida=tareaService.findByNombre("urgente");
-        tareaDTO tareaDTOptenida=tareaDTOsOptenida.get().getFirst();
+        List<tareaDTO>tareaDTOsOptenida=tareaService.findByNombre("urgente");
+        tareaDTO tareaDTOptenida=tareaDTOsOptenida.getFirst();
 
-        assertTrue(tareaDTOsOptenida.isPresent());
+        
         assertEquals(tareaDTOEsperada, tareaDTOptenida);
         
     }

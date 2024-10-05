@@ -43,17 +43,17 @@ public class CategoriaServiceTest {
     @Test
     public void categoria_find_by_id(){
         Long idLong=categoriaRepo.findByNombreCategoria(categoriaDTOEsperada.getNombreCategoria()).get().getId();
-        Optional<categoriaDTO> categoriaObtenida=categoriaService.findById(idLong);
-        assertTrue(categoriaObtenida.isPresent());
-        assertEquals(categoriaDTOEsperada, categoriaObtenida.get());
+        categoriaDTO categoriaObtenida=categoriaService.findById(idLong);
+        
+        assertEquals(categoriaDTOEsperada, categoriaObtenida);
        //categoriaService.delete(categoriaEsperada.getId());
     }
 
     @Test
     public void categoria_find_by_nombreCategoria(){
-        Optional<categoriaDTO>categoriaObtenida=categoriaService.findByNombre("loco");
-        assertTrue(categoriaObtenida.isPresent());
-        assertEquals(categoriaDTOEsperada,categoriaObtenida.get());
+        categoriaDTO categoriaObtenida=categoriaService.findByNombre("loco");
+        
+        assertEquals(categoriaDTOEsperada,categoriaObtenida);
         //categoriaService.delete(categoriaEsperada.getId());
     }
 
@@ -63,10 +63,10 @@ public class CategoriaServiceTest {
         categoriaDTOEsperada.setNombreCategoria("urgente");
         categoriaService.update(idLong, categoriaDTOEsperada);
 
-        Optional<categoriaDTO>categoriaObtenida=categoriaService.findById(idLong);
+        categoriaDTO categoriaObtenida=categoriaService.findById(idLong);
         
-        assertTrue(categoriaObtenida.isPresent());
-        assertEquals(categoriaDTOEsperada, categoriaObtenida.get());
+       
+        assertEquals(categoriaDTOEsperada, categoriaObtenida);
         
     }
 

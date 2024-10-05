@@ -1,8 +1,6 @@
 package com.api.gestiondetareas.Service.impl;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +30,10 @@ public class categoriaServiceImpl implements Icategoria{
 
 
     @Override
-    public Optional<categoriaDTO> findByNombre(String nombre) {
+    public categoriaDTO findByNombre(String nombre) {
         categoria category=categoriaRepo.findByNombreCategoria(nombre).orElseThrow(()-> new categoriaNoEncontradaException("no se encontro la categoria con el nombre"+nombre));
         categoriaDTO categoria=mapper.toCategoriaDto(category);
-        return Optional.of(categoria);
+        return categoria;
     }
 
 
@@ -47,15 +45,20 @@ public class categoriaServiceImpl implements Icategoria{
 
     @Override
     public void delete(Long id) {
-        categoriaRepo.deleteById(id);
+        if (categoriaRepo.existsById(id)) {
+             categoriaRepo.deleteById(id);
+        }else{
+            throw new categoriaNoEncontradaException("no se encontro la categoria con el id "+id);
+        }
+       
     }
 
 
     @Override
-    public Optional<categoriaDTO> findById(long id) {
+    public categoriaDTO findById(long id) {
        categoria category=categoriaRepo.findById(id).orElseThrow(()-> new categoriaNoEncontradaException("no se encontro la categoria con el id"+id));
        categoriaDTO categoria=mapper.toCategoriaDto(category);
-       return Optional.of(categoria);
+       return categoria;
     }
 
     @Override

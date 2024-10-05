@@ -1,7 +1,6 @@
 package com.api.gestiondetareas.Service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +28,10 @@ public class tareaServiceImpl implements Itarea{
 
 
     @Override
-    public Optional<List<tareaDTO>> findByNombre(String nombre) {
+    public List<tareaDTO> findByNombre(String nombre) {
        List<tarea>lista=tareaRepo.findByNombre(nombre).orElseThrow(()->new tareaNoEncontradaException("no se encontro una tarea con ese nombre"));
        List<tareaDTO>tareas=mapper.toTareasDto(lista);
-       return Optional.of(tareas);
+       return tareas;
     }
 
 
@@ -44,15 +43,20 @@ public class tareaServiceImpl implements Itarea{
 
     @Override
     public void delete(Long id) {
-       tareaRepo.deleteById(id);
+        if (tareaRepo.existsById(id)) {
+            tareaRepo.deleteById(id);
+        }else{
+            throw new tareaNoEncontradaException("no se econtro la tarea con el id "+id);
+        }
+       
     }
 
 
     @Override
-    public Optional<tareaDTO> findById(Long id) {
+    public tareaDTO findById(Long id) {
         tarea task=tareaRepo.findById(id).orElseThrow(()-> new tareaNoEncontradaException("no se encontro la tarea"));
         tareaDTO tarea=mapper.toTareaDto(task);
-        return Optional.of(tarea);
+        return tarea;
     }
 
 
