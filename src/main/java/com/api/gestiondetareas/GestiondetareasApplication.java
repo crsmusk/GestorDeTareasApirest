@@ -1,20 +1,10 @@
 package com.api.gestiondetareas;
 
-import java.util.List;
-
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-
-import com.api.gestiondetareas.Model.Entities.permiso;
-import com.api.gestiondetareas.Model.Entities.rol;
-import com.api.gestiondetareas.Model.Entities.usuario;
-import com.api.gestiondetareas.Repository.usuarioRepository;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.api.gestiondetareas")
+//@ComponentScan(basePackages = "com.api.gestiondetareas")
 public class GestiondetareasApplication {
 
 	public static void main(String[] args) {
